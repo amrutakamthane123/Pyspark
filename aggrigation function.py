@@ -1,6 +1,8 @@
+
+
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
-
+from pyspark.sql.functions import *
 if __name__ == "__main__":
     spark = SparkSession.builder.master("local[*]").appName('filter out data').getOrCreate()
 
@@ -12,14 +14,12 @@ if __name__ == "__main__":
         StructField('salary', DoubleType())
     ])
 
-    df = spark.read.load(r'D:\Pyspark\employee.csv', format='csv', schema=Schema_data)
+    df = spark.read.load(r'D:\Pyspark\venv\emp.csv', format='csv', schema=Schema_data)
     #df.printSchema()
-    #df.show()
-    #df.filter(df.gender=='male').select('id','name','gender').show()
-    df.filter(df.gender != 'male'.select('id', 'name', 'gender').show())
-    #salary less than 10000
-    #df.filter(df.salary<10000).show()
-    #startwith endwith
-    #df.filter(df.gender.startswith('M')).show()
-    #Git Commment check
+    df.show()
+    df.select(avg('salary')).show()
+    df.select(max('salary')).show()
+    df.select(min('salary')).show()
+    df.select(count('salary')).show()
 
+    
